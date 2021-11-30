@@ -323,6 +323,7 @@ maxY=max(yForPlt)
 
 #---
 # cv2.polylines(img, [points], True, (110, 110, 200), 2)
+#========reshape the order of points in polygon======================
 def reArrangeSenPoints(Points):
     y=[]
     newOrder=points.squeeze().tolist()   
@@ -385,8 +386,8 @@ if IsSimplePoly(poly):
         temp.append([(minX+pois.exterior.coords.xy[0][2]/(maxPoisX-minPoisX)*(maxX-minX))/448*500,(minY+pois.exterior.coords.xy[1][2]/(maxPoisY-minPoisY)*(maxY-minY))/448*500])
 
         addTria=copy.deepcopy(temp)
-        newTriaPoints.append(addTria)
-        TriaPointForProcessing.extend(addTria)
+        newTriaPoints.append(addTria)#the basis of processing that is to convert to tetragon
+        TriaPointForProcessing.extend(addTria)#this is for processing
     print("newTriaPoints:\n",newTriaPoints,"\n")
     plt.show()
 else:
@@ -450,7 +451,7 @@ for i in newTriaPoints:
         if i==j:
             pass
         else:
-            a=[x for x in i if x in j]
+            a=[x for x in i if x in j]#to find same points in newTriaPoints
             if(len(a)==2):
                 temp=i+j
                 temp1=[]
